@@ -25,6 +25,19 @@ def test_listar_produtos():
 
 def test_compra_com_sucesso():
 
+    conn = get_db_connection()
+
+    conn.execute(
+        """
+        UPDATE produtos
+        SET estoque = 10
+        WHERE nome = 'teclado'
+        """
+    )
+
+    conn.commit()
+    conn.close()
+
     response = client.post(
         "/api/comprar",
         json={
